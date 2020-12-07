@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using Xamarin.Forms;
 
@@ -7,18 +8,11 @@ namespace ClockTimer
 {
     public partial class MainPage : ContentPage
     {
-        object container;
-        string timeLeft;
+        Button timerButton;
+        bool alive = true;
         public MainPage()
         {
             InitializeComponent();
-
-         //   if (App.Current.Properties.TryGetValue("isTimer", out container))
-         //   {
-           //     timeLeft = Convert.ToDateTime(App.Current.Properties["isTimer"].ToString()).ToString("HH:mm:ss");
-          //  }
-
-
             SetTimer();
         }
 
@@ -30,14 +24,7 @@ namespace ClockTimer
                 {
                     date.Text = DateTime.Now.ToString("dd.MM.yyyy");
                     clock.Text = DateTime.Now.ToString("HH:mm:ss");
-                  //  Ctimer.Text = !string.IsNullOrWhiteSpace(timeLeft)? Convert.ToDateTime(timeLeft).AddSeconds(-1).ToString("HH:mm:ss") : "Таймер";
-                 //   var form = Convert.ToDateTime(container.ToString());
-                 //  var time = form.AddSeconds(-1).ToString("HH:mm:ss");
-                    /*  if (App.Current.Properties.TryGetValue("isTimer", out container))
-                      {
-                          clock_Timer();
-                      }
-                      else Ctimer.Text = "Таймер";*/
+
                 });
                 return true;
             });
@@ -50,29 +37,27 @@ namespace ClockTimer
             var timer = new Timer();
             await Navigation.PushAsync(timer);
         }
-
-
-        private void clock_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async void DisplayTime()
         {
-            if (App.Current.Properties.TryGetValue("isTimer", out container))
+            while (alive)
             {
-
-
-                        if (container != null && container.ToString() != "00:00:00")
-                        {
-                           var b = Convert.ToDateTime(container.ToString()).AddSeconds(-1).ToString("HH:mm:ss");
-                            Ctimer.Text = b;
-                            App.Current.Properties.Remove("isTimer");
-                            App.Current.Properties.Add("isTimer", b);
-                            container = App.Current.Properties["isTimer"];
-                        }
-                        else if (container.ToString() == "00:00:00")
-                        {
-                            App.Current.Properties.Remove("isTimer");
-                            DisplayAlert("Таймер", "Таймер достиг 00:00:00", "ОК");
-                        }
-                        else Ctimer.Text = "Таймер";
+                Ctimer.Text = DateTime.Now.ToString("HH:mm:ss");
+                await Task.Delay(1000);
             }
         }
+
+        public void StartTimer()
+        {
+            if (alive == true)
+            {
+                alive = false;
+            }
+            else
+            {
+                alive = true;
+                DisplayTime();
+            }
+        }
+
     }
 }

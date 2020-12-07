@@ -17,6 +17,7 @@ namespace ClockTimer
         public Timer()
         {
             InitializeComponent();
+            startStop.Text == "старт"
         }
 
         private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
@@ -49,7 +50,7 @@ namespace ClockTimer
             _time = Convert.ToDateTime(timePicker.Time.ToString()).AddSeconds(Convert.ToInt32(seconds.Text));
           //  main.BindingContext = (_time,false);
             App.Current.Properties.Add("isTimer",_time);
-            await Navigation.PopAsync();
+            await Navigation.PushAsync(new MainPage());
 
         }
       /*  public async void StartingTimer(DateTime time, bool returnValue)
