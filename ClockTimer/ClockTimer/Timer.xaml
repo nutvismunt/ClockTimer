@@ -5,10 +5,11 @@
     <StackLayout Margin="10,10,10,0">
         <StackLayout HorizontalOptions="Center"  Orientation="Horizontal" Spacing="0" >
             <TimePicker BackgroundColor="LightSlateGray" Format="HH:mm" x:Name="timePicker" FontSize="Medium"></TimePicker>
+            <Label Text=":"/>
             <Entry TextChanged="OnEntryTextChanged" BackgroundColor="LightSlateGray" Text="00" Keyboard="Numeric" MaxLength="2" x:Name="seconds" FontSize="Medium"></Entry>
         </StackLayout>
         <Button Clicked="StartTimer" x:Name="startStop"/>
         <Label x:Name="timeLeft"></Label>
     </StackLayout>
-    
+
 </ContentPage>

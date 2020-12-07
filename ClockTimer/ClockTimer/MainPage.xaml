@@ -2,13 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClockTimer.MainPage" Title="Дата и время">
-    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:Name="stackLayout">
         <Label x:Name="date"  FontSize="Large"  HorizontalOptions="Center"/>
-        <Label x:Name="clock"  FontSize="60"  HorizontalOptions="Center" PropertyChanged="clock_PropertyChanged"/>
-
-
-
-        <Button Clicked="OnTimer" x:Name="Ctimer" FontSize="Medium" Margin="10,0,0,0" />
+        <Label x:Name="clock"  FontSize="60"  HorizontalOptions="Center" />
+        <Button Clicked="Ctimer_Clicked" x:Name="Ctimer" FontSize="Medium" Margin="10,0,0,0" />
+        <Button Clicked="PauseClicked" x:Name="buttonPause" Text="Пауза" Margin="10,0,0,0"/>
+        <Button Clicked="ContinueClicked" x:Name="buttonContinue" Text="Продолжить" Margin="10,0,0,0"/>
     </StackLayout>
 
 </ContentPage>

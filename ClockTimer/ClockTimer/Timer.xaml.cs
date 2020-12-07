@@ -14,10 +14,11 @@ namespace ClockTimer
     {
         public DateTime _time;
         public bool isenabled;
+        object container;
         public Timer()
         {
             InitializeComponent();
-            startStop.Text == "старт"
+            startStop.Text = "старт";
         }
 
         private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
@@ -30,39 +31,16 @@ namespace ClockTimer
                     seconds.Text = e.OldTextValue;
                     seconds.TextChanged += OnEntryTextChanged;
                 }
+            if (string.IsNullOrWhiteSpace(seconds.Text)) seconds.Text = "00";
         }
         private async void StartTimer(object sender, EventArgs e)
         {
-            bool returnValue;
-            if (startStop.Text == "старт")
-            {
-                returnValue = true;
-                startStop.Text = "стоп";
-            }
-            else
-            {
-                startStop.Text = "старт";
-                returnValue = false;
-            }
-
-          //  StartingTimer(Convert.ToDateTime(timePicker.Time.ToString()).AddSeconds(Convert.ToInt32(seconds.Text)), returnValue);
-            var main = new MainPage();
+            if (App.Current.Properties.TryGetValue("isTimer", out container)) App.Current.Properties.Remove("isTimer");
+            if (App.Current.Properties.TryGetValue("isPaused", out container)) App.Current.Properties.Remove("isPaused");
             _time = Convert.ToDateTime(timePicker.Time.ToString()).AddSeconds(Convert.ToInt32(seconds.Text));
-          //  main.BindingContext = (_time,false);
-            App.Current.Properties.Add("isTimer",_time);
-            await Navigation.PushAsync(new MainPage());
+            App.Current.Properties.Add("isTimer", _time);
+            await Navigation.PopAsync();
 
         }
-      /*  public async void StartingTimer(DateTime time, bool returnValue)
-        {
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _time = time.AddSeconds(-1);
-                });
-                return returnValue; // True = Repeat again, False = Stop the timer
-            });
-        }*/
     }
 }
